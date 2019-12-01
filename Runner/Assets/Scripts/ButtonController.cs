@@ -7,6 +7,8 @@ public class ButtonController : MonoBehaviour
 {
     public void PlayGame()
     {
+        Time.timeScale = 0;
         SceneManager.LoadScene("Game");
+        Time.timeScale = 1;
     }
 }
