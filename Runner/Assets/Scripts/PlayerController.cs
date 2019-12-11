@@ -1,6 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.Tilemaps;
+
 
 public class PlayerController : MonoBehaviour
 {
@@ -15,12 +18,14 @@ public class PlayerController : MonoBehaviour
     private Rigidbody2D rb;
 
     private BoxCollider2D bc;
+    private TilemapCollider2D tc;
 
     // Start is called before the first frame update
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         bc = GetComponent<BoxCollider2D>();
+        tc = GetComponent<TilemapCollider2D>();
     }
 
     // FixedUpdate is called every fixed frame-rate frame, use it when using Rigidbody
@@ -30,15 +35,18 @@ public class PlayerController : MonoBehaviour
         rb.velocity = new Vector2(speed, rb.velocity.y);
     }
 
+ 
     // Update is called once per frame
     // Real FPS
     void Update()
     {
+
         grounded = isGrounded();
 
         if (Input.GetButton("Jump") && grounded)
             rb.velocity = new Vector2(0, jumpForce);
     }
+
 
     bool isGrounded()
     {
