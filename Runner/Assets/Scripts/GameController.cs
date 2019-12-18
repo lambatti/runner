@@ -11,11 +11,14 @@ public class GameController : MonoBehaviour
 
     public TextMeshProUGUI scoreText;
 
+    public Rigidbody2D player;
+
     private Stopwatch sw;
 
     // Start is called before the first frame update
     void Start()
     {
+        player.position = new Vector3(-5,0.5f,0);
         score = 0;
         sw = new Stopwatch();
         sw.Start();
