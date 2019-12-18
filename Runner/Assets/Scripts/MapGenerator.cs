@@ -190,7 +190,7 @@ public class MapGenerator : MonoBehaviour
 
     void GenerateChunk(Chunk chunk)
     {
-        int offset = 100;
+        int offset = 15;
         int i = 0;
         while(i<chunkWidth)
         {
