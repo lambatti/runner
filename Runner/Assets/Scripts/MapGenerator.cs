@@ -174,21 +174,21 @@ public class MapGenerator : MonoBehaviour
         {
             if (i == middle - tunnelHeight)
             {
-                for (int j = -8; j < chunkWidth * 6; j++)
+                for (int j = -15; j < chunkWidth * 6; j++)
                 {
                     mapTilemap.SetTile(new Vector3Int(j, tunnelHeight, 0), ceiling);
                 }
             }
             else if (i == middle + 1)
             {
-                for (int j = -8; j < chunkWidth * 6; j++)
+                for (int j = -15; j < chunkWidth * 6; j++)
                 {
                     mapTilemap.SetTile(new Vector3Int(j, -1, 0), floor);
                 }
             }
             else if (i < middle - tunnelHeight || i > middle + 1)
             {
-                for (int j = -8; j < chunkWidth * 6; j++)
+                for (int j = -15; j < chunkWidth * 6; j++)
                 {
                     mapTilemap.SetTile(new Vector3Int(j, middle - i, 0), ground);
                 }
