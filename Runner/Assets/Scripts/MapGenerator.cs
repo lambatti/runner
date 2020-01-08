@@ -30,7 +30,9 @@ public class MapGenerator : MonoBehaviour
     public Rigidbody2D player;
 
     public int ObstacleOffset = 10;
-    public int ObstacleRange = 10;
+    public int ObstacleRangeMin = 5;
+    public int ObstacleRangeMax = 10;
+
 
     System.Random rand = new System.Random();
 
@@ -205,7 +207,7 @@ public class MapGenerator : MonoBehaviour
         while (i < chunkWidth)
         {
             obstacleLayer = obstacleEnum.ground;
-            obstaclePosition = rand.Next(8, ObstacleRange);
+            obstaclePosition = rand.Next(ObstacleRangeMin, ObstacleRangeMax);
             obstacleLayer += rand.Next(0, 10) % 2;
             Debug.Log("LAYER: " + obstacleLayer);
             if (obstaclePosition + i <= 50)
