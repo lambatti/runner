@@ -40,7 +40,7 @@ public class MapGenerator : MonoBehaviour
     int chunkHeight = 50;
     int chunkWidth = 50;
 
-    private enum obstacleEnum { ground, flying };
+    private enum obstacleEnum { ground, flyingUpper, flyingLower };
     private int tunnelHeight = 5;
     bool[] isChunkGenerated = new bool[6];
 
@@ -208,7 +208,7 @@ public class MapGenerator : MonoBehaviour
         {
             obstacleLayer = obstacleEnum.ground;
             obstaclePosition = rand.Next(ObstacleRangeMin, ObstacleRangeMax);
-            obstacleLayer += rand.Next(0, 10) % 2;
+            obstacleLayer += rand.Next(0, 10) % 3;
             Debug.Log("LAYER: " + obstacleLayer);
             if (obstaclePosition + i <= 50)
             {
@@ -219,10 +219,14 @@ public class MapGenerator : MonoBehaviour
                             obstacleTilemap.SetTile(new Vector3Int(chunk.width + obstaclePosition + i, 0, 0), groundObstacle);
                             break;
                         }
-                    case obstacleEnum.flying:
+                    case obstacleEnum.flyingUpper:
                         {
-
                             obstacleTilemap.SetTile(new Vector3Int(chunk.width + obstaclePosition + i, tunnelHeight - 2, 0), flyingObstacle);
+                            break;
+                        }
+                    case obstacleEnum.flyingLower:
+                        {
+                            obstacleTilemap.SetTile(new Vector3Int(chunk.width + obstaclePosition + i, tunnelHeight - 4, 0), flyingObstacle);
                             break;
                         }
                     default:
@@ -241,6 +245,7 @@ public class MapGenerator : MonoBehaviour
         {
             obstacleTilemap.SetTile(new Vector3Int(i, 0, 0), null);
             obstacleTilemap.SetTile(new Vector3Int(i, tunnelHeight - 2, 0), null);
+            obstacleTilemap.SetTile(new Vector3Int(i, tunnelHeight - 4, 0), null);
         }
     }
 

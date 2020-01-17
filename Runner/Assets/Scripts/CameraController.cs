@@ -21,7 +21,7 @@ public class CameraController : MonoBehaviour
     {
         focusPosition = focusObject.transform.position;
 
-        focusPosition.x += 5;
+        focusPosition.x += 7;
 
         Vector3 distance = focusPosition - (Vector2)transform.position;
 
