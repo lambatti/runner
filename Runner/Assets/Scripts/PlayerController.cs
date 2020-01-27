@@ -48,7 +48,6 @@ public class PlayerController : MonoBehaviour
             rb.velocity = new Vector2(0, jumpForce);
     }
 
-
     bool isGrounded()
     {
         Vector3 boxPos = transform.position + new Vector3(bc.offset.x, bc.offset.y, 0);
@@ -60,5 +59,10 @@ public class PlayerController : MonoBehaviour
         RaycastHit2D hitR = Physics2D.Raycast(posR, direction, rayLength, ground);
 
         return hitL.collider != null || hitR.collider != null;
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        GameController.RestartGame();
     }
 }

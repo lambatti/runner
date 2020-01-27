@@ -57,5 +57,11 @@ public class GameController : MonoBehaviour
 
     private void OnApplicationQuit()
     {
+
+    }
+
+    public static void RestartGame()
+    {
+       SceneManager.LoadScene("Menu",LoadSceneMode.Single);
     }
 }
