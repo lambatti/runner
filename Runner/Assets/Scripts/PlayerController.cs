@@ -28,6 +28,7 @@ public class PlayerController : MonoBehaviour
         tc = GetComponent<TilemapCollider2D>();
     }
 
+
     // FixedUpdate is called every fixed frame-rate frame, use it when using Rigidbody
     // 50fps
     private void FixedUpdate()

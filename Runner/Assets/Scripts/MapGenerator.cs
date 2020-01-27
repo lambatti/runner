@@ -63,7 +63,7 @@ public class MapGenerator : MonoBehaviour
         UnityEngine.Random.InitState(seed);
 
 
-
+        
         for (int i = 0; i < 6; i++)
         {
             chunk[i] = new Chunk(chunkWidth * i, chunkHeight);
@@ -76,8 +76,8 @@ public class MapGenerator : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.Log("x = " + player.position.x + "; y = " + player.position.y + "; ");
-        Debug.Log("chunk nr " + OnWhichChunk(player) + "; ");
+        //Debug.Log("x = " + player.position.x + "; y = " + player.position.y + "; ");
+        //Debug.Log("chunk nr " + OnWhichChunk(player) + "; ");
         switch (OnWhichChunk(player))
         {
             case 0:
