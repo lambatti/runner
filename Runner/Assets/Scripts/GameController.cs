@@ -8,7 +8,7 @@ using System.IO;
 
 public class GameController : MonoBehaviour
 {
-    public int score;
+    public int score = 0;
 
     private int bestScore;
     private string bestScoreName = "BestScore";
@@ -23,7 +23,6 @@ public class GameController : MonoBehaviour
 
     private void Awake()
     {
-        score = 0;
         bestScore = PlayerPrefs.GetInt(bestScoreName, 0);
         PlayerPrefs.Save();
         UnityEngine.Debug.Log("Loaded");
@@ -49,10 +48,6 @@ public class GameController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(score>bestScore)
-        PlayerPrefs.SetInt(bestScoreName, score);
-        PlayerPrefs.Save();
-        UnityEngine.Debug.Log("Saved");
     }
 
     private void OnApplicationQuit()
@@ -60,8 +55,15 @@ public class GameController : MonoBehaviour
 
     }
 
-    public static void RestartGame()
+    public void GameOver()
     {
-       SceneManager.LoadScene("Menu",LoadSceneMode.Single);
+        if (score > bestScore)
+        {
+            PlayerPrefs.SetInt(bestScoreName, score);
+            PlayerPrefs.Save();
+            UnityEngine.Debug.Log("Saved");
+        }
+        SceneManager.LoadScene("Menu",LoadSceneMode.Single);
     }
+
 }

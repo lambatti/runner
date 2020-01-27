@@ -17,6 +17,8 @@ public class PlayerController : MonoBehaviour
 
     private Rigidbody2D rb;
 
+    public GameObject go;
+
     private BoxCollider2D bc;
     private TilemapCollider2D tc;
 
@@ -63,6 +65,6 @@ public class PlayerController : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        GameController.RestartGame();
+        go.GetComponent<GameController>().GameOver();
     }
 }
