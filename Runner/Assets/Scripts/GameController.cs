@@ -55,6 +55,12 @@ public class GameController : MonoBehaviour
 
     }
 
+    public void Transition(Rigidbody2D player)
+    {
+        PlayerController.speed *= 2;
+        player.position = new Vector3(25, player.position.y);
+    }
+
     public void GameOver()
     {
         if (score > bestScore)
@@ -65,5 +71,7 @@ public class GameController : MonoBehaviour
         }
         SceneManager.LoadScene("Menu",LoadSceneMode.Single);
     }
+
+
 
 }

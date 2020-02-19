@@ -7,7 +7,7 @@ using UnityEngine.Tilemaps;
 
 public class PlayerController : MonoBehaviour
 {
-    public float speed=0.2f;
+    public static float speed=10f;
     public float jumpForce = 1;
     public float rayLength = 1;
 
@@ -17,7 +17,7 @@ public class PlayerController : MonoBehaviour
 
     private Rigidbody2D rb;
 
-    public GameObject go;
+    public GameObject gameControllerObject;
 
     private BoxCollider2D bc;
     private TilemapCollider2D tc;
@@ -50,6 +50,7 @@ public class PlayerController : MonoBehaviour
             rb.velocity = new Vector2(0, jumpForce);
     }
 
+
     bool isGrounded()
     {
         Vector3 boxPos = transform.position + new Vector3(bc.offset.x, bc.offset.y, 0);
@@ -65,6 +66,6 @@ public class PlayerController : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        go.GetComponent<GameController>().GameOver();
+        gameControllerObject.GetComponent<GameController>().GameOver();
     }
 }

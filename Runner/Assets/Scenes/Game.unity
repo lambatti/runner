@@ -160,6 +160,7 @@ MonoBehaviour:
   ObstacleOffset: 10
   ObstacleRangeMin: 6
   ObstacleRangeMax: 10
+  gameControllerObject: {fileID: 1380081566}
 --- !u!4 &12539627
 Transform:
   m_ObjectHideFlags: 0
@@ -5292,14 +5293,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1727e4d6f394a954c8bcfa67fdf8e6ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 12
   jumpForce: 18
   rayLength: 0.85
   grounded: 0
   ground:
     serializedVersion: 2
     m_Bits: 256
-  go: {fileID: 1380081566}
+  gameControllerObject: {fileID: 1380081566}
 --- !u!66 &1473989889
 CompositeCollider2D:
   m_ObjectHideFlags: 0

@@ -33,6 +33,7 @@ public class MapGenerator : MonoBehaviour
     public int ObstacleRangeMin = 5;
     public int ObstacleRangeMax = 10;
 
+    public GameObject gameControllerObject;
 
     System.Random rand = new System.Random();
 
@@ -76,7 +77,7 @@ public class MapGenerator : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //Debug.Log("x = " + player.position.x + "; y = " + player.position.y + "; ");
+        Debug.Log("x = " + player.position.x + "; y = " + player.position.y + "; ");
         //Debug.Log("chunk nr " + OnWhichChunk(player) + "; ");
         switch (OnWhichChunk(player))
         {
@@ -144,7 +145,7 @@ public class MapGenerator : MonoBehaviour
                     isChunkGenerated[0] = false;
                     if (player.position.x > 275)
                     {
-                        player.position = new Vector3(25, player.position.y);
+                        gameControllerObject.GetComponent<GameController>().Transition(player);
                     }
                     break;
                 }
