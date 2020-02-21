@@ -133,9 +133,12 @@ public class MapGenerator : MonoBehaviour
                 }
             case 5:
                 {
+                    int x = Convert.ToInt32(Math.Round(PlayerController.speed * PlayerController.speedMultiplier));
+                    ObstacleOffset = x;
+                    obstacleTilemap.ClearAllTiles();
                     GenerateChunk(chunk[0]);
                     isChunkGenerated[0] = true;
-                    AdjustFirstChunk(Convert.ToInt32(Math.Round(PlayerController.speed*PlayerController.speedMultiplier)));
+                    AdjustFirstChunk(x);
                     gameControllerObject.GetComponent<GameController>().Transition(player);
                     //
                     /*if (player.position.x > chunkWidth*6-25)
