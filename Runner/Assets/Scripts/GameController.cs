@@ -57,8 +57,8 @@ public class GameController : MonoBehaviour
 
     public void Transition(Rigidbody2D player)
     {
-        PlayerController.speed *= 2;
-        player.position = new Vector3(25, player.position.y);
+        PlayerController.speed *= PlayerController.speedMultiplier;
+        player.position = new Vector3(0, player.position.y);
     }
 
     public void GameOver()

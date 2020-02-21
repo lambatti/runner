@@ -30,20 +30,20 @@ public class MapGenerator : MonoBehaviour
     public Rigidbody2D player;
 
     public int ObstacleOffset = 10;
-    public int ObstacleRangeMin = 5;
-    public int ObstacleRangeMax = 10;
+    public int ObstacleVarietyMin = 5;
+    public int ObstacleVarietyMax = 10;
 
     public GameObject gameControllerObject;
 
     System.Random rand = new System.Random();
 
     Chunk[] chunk = new Chunk[6];
-    int chunkHeight = 50;
-    int chunkWidth = 50;
+    private int chunkHeight = 50;
+    private int chunkWidth = 100;
 
     private enum obstacleEnum { ground, flyingUpper, flyingLower };
     private int tunnelHeight = 5;
-    bool[] isChunkGenerated = new bool[6];
+    private bool[] isChunkGenerated = new bool[6];
 
 
     // Start is called before the first frame update
@@ -63,8 +63,6 @@ public class MapGenerator : MonoBehaviour
         mapTilemap.ClearAllTiles();
         UnityEngine.Random.InitState(seed);
 
-
-        
         for (int i = 0; i < 6; i++)
         {
             chunk[i] = new Chunk(chunkWidth * i, chunkHeight);
@@ -86,7 +84,6 @@ public class MapGenerator : MonoBehaviour
                     if (!isChunkGenerated[1])
                     {
                         ClearChunk(chunk[4]);
-                        ClearChunk(chunk[5]);
                         isChunkGenerated[5] = false;
                         GenerateChunk(chunk[1]);
                         isChunkGenerated[1] = true;
@@ -127,26 +124,24 @@ public class MapGenerator : MonoBehaviour
                 }
             case 4:
                 {
-                    if (!isChunkGenerated[5] && !isChunkGenerated[0])
+                    if (!isChunkGenerated[0])
                     {
                         ClearChunk(chunk[2]);
                         isChunkGenerated[3] = false;
-                        GenerateFirstAndLastChunk();
-
-                        isChunkGenerated[5] = true;
-                        isChunkGenerated[0] = true;
                     }
                     break;
                 }
             case 5:
                 {
-                    ClearChunk(chunk[3]);
-                    isChunkGenerated[4] = false;
-                    isChunkGenerated[0] = false;
-                    if (player.position.x > 275)
+                    GenerateChunk(chunk[0]);
+                    isChunkGenerated[0] = true;
+                    AdjustFirstChunk(Convert.ToInt32(Math.Round(PlayerController.speed*PlayerController.speedMultiplier)));
+                    gameControllerObject.GetComponent<GameController>().Transition(player);
+                    //
+                    /*if (player.position.x > chunkWidth*6-25)
                     {
                         gameControllerObject.GetComponent<GameController>().Transition(player);
-                    }
+                    }*/
                     break;
                 }
             default:
@@ -155,20 +150,6 @@ public class MapGenerator : MonoBehaviour
                 }
         }
     }
-
-    void GenerateFirstAndLastChunk()
-    {
-        int offset = 10;
-        int i = 0;
-        while (i < chunkWidth)
-        {
-            int pos = rand.Next(0, offset);
-            obstacleTilemap.SetTile(new Vector3Int(pos + i, 0, 0), groundObstacle);
-            obstacleTilemap.SetTile(new Vector3Int(pos + i + 250, 0, 0), groundObstacle);
-            i += offset;
-        }
-    }
-
 
     void GenerateMap()
     {
@@ -208,10 +189,10 @@ public class MapGenerator : MonoBehaviour
         while (i < chunkWidth)
         {
             obstacleLayer = obstacleEnum.ground;
-            obstaclePosition = rand.Next(ObstacleRangeMin, ObstacleRangeMax);
+            obstaclePosition = rand.Next(ObstacleVarietyMin, ObstacleVarietyMax);
             obstacleLayer += rand.Next(0, 10) % 3;
-            Debug.Log("LAYER: " + obstacleLayer);
-            if (obstaclePosition + i <= 50)
+            //Debug.Log("LAYER: " + obstacleLayer);
+            if (obstaclePosition + i <= chunkWidth-ObstacleVarietyMin)
             {
                 switch (obstacleLayer)
                 {
@@ -247,6 +228,23 @@ public class MapGenerator : MonoBehaviour
             obstacleTilemap.SetTile(new Vector3Int(i, 0, 0), null);
             obstacleTilemap.SetTile(new Vector3Int(i, tunnelHeight - 2, 0), null);
             obstacleTilemap.SetTile(new Vector3Int(i, tunnelHeight - 4, 0), null);
+        }
+    }
+
+    void AdjustFirstChunk(int width)
+    {
+        if (!(width > chunkWidth))
+        {
+            for (int i = 0; i < width; i++)
+            {
+                obstacleTilemap.SetTile(new Vector3Int(i, 0, 0), null);
+                obstacleTilemap.SetTile(new Vector3Int(i, tunnelHeight - 2, 0), null);
+                obstacleTilemap.SetTile(new Vector3Int(i, tunnelHeight - 4, 0), null);
+            }
+        }
+        else
+        {
+            ClearChunk(chunk[0]);
         }
     }
 
