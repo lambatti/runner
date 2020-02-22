@@ -7,7 +7,8 @@ using UnityEngine.Tilemaps;
 
 public class PlayerController : MonoBehaviour
 {
-    public static float speed=10f;
+    private const float defaultSpeed = 10f;
+    public static float speed = defaultSpeed;
     public static float speedMultiplier = 1.2f;
     public float jumpForce = 1;
     public float rayLength = 1;
@@ -68,5 +69,10 @@ public class PlayerController : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         gameControllerObject.GetComponent<GameController>().GameOver();
+    }
+
+    public static void ResetSpeed()
+    {
+        speed = defaultSpeed;
     }
 }

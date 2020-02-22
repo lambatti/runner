@@ -58,6 +58,7 @@ public class GameController : MonoBehaviour
     public void Transition(Rigidbody2D player)
     {
         PlayerController.speed *= PlayerController.speedMultiplier;
+        UnityEngine.Debug.Log("CURRENT SPEED: " + PlayerController.speed);
         player.position = new Vector3(0, player.position.y);
     }
 
@@ -69,6 +70,7 @@ public class GameController : MonoBehaviour
             PlayerPrefs.Save();
             UnityEngine.Debug.Log("Saved");
         }
+        PlayerController.ResetSpeed();
         SceneManager.LoadScene("Menu",LoadSceneMode.Single);
     }
 

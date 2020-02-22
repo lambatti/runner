@@ -19,7 +19,7 @@ public class MapGenerator : MonoBehaviour
 {
     public Tilemap obstacleTilemap;
     public Tilemap mapTilemap;
-
+    
     public Tile flyingObstacle;
     public Tile groundObstacle;
     public Tile ceiling;
@@ -38,11 +38,14 @@ public class MapGenerator : MonoBehaviour
 
     private int mapHeight = 20;
     private int mapWidth;
+    private int mapGeneratorWidth;
 
     private enum obstacleEnum { ground, flyingUpper, flyingLower };
     private int tunnelHeight = 5;
 
-
+    private const int startingPos = -15;
+    private int currentPos;
+    private int previousPos;
     // Start is called before the first frame update
     void Start()
     {
@@ -54,6 +57,7 @@ public class MapGenerator : MonoBehaviour
         //ground = GetComponent<Tile>();
         //player = GetComponent<Rigidbody2D>();
         mapWidth = updateMapWidth();
+        mapGeneratorWidth = updateMapWidth();
 
         int seed = rand.Next();
         obstacleTilemap.ClearAllTiles();
@@ -61,57 +65,65 @@ public class MapGenerator : MonoBehaviour
         UnityEngine.Random.InitState(seed);
 
 
-        GenerateMap();
+        GenerateMap(startingPos, mapGeneratorWidth);
+        previousPos = startingPos;
         GenerateObstacles();
     }
 
     // Update is called once per frame
     void Update()
     {
+        
+        currentPos = Convert.ToInt32(Math.Floor(player.position.x));
+        if(currentPos > previousPos)
+        {
+            GenerateMap(mapGeneratorWidth + previousPos, mapGeneratorWidth + currentPos);
+            previousPos = currentPos;
+        }
         //Debug.Log("x = " + player.position.x + "; y = " + player.position.y + "; ");
         //Debug.Log("chunk nr " + OnWhichChunk(player) + "; ");
        if(player.position.x > mapWidth - 2 * PlayerController.speed)
         {
             Debug.Log("Clearing obstacle tiles!");
             obstacleTilemap.ClearAllTiles();
+            GenerateObstacles();
             gameControllerObject.GetComponent<GameController>().Transition(player);
             ObstacleOffset = Convert.ToInt32(PlayerController.speed);
             mapWidth = updateMapWidth();
-            Debug.Log("Generating map!");
-            //GenerateMap();
-            Debug.Log("Done.");
-            GenerateObstacles();
+            //Debug.Log("Generating map!");
+            //Debug.Log("Done.");
         }
 
     }
 
-    void GenerateMap()
+    void GenerateMap(int start, int end)
     {
         int middle = mapHeight / 2;
         for (int i = 0; i < mapHeight; i++)
         {
             if (i == middle - tunnelHeight)
             {
-                for (int j = -15; j < mapWidth * 6; j++)
+                for (int j = start; j < end; j++)
                 {
                     mapTilemap.SetTile(new Vector3Int(j, tunnelHeight, 0), ceiling);
                 }
             }
             else if (i == middle + 1)
             {
-                for (int j = -15; j < mapWidth * 6; j++)
+                for (int j = start; j < end; j++)
                 {
                     mapTilemap.SetTile(new Vector3Int(j, -1, 0), floor);
                 }
             }
             else if (i < middle - tunnelHeight || i > middle + 1)
             {
-                for (int j = -15; j < mapWidth * 6; j++)
+                for (int j = start; j < end; j++)
                 {
                     mapTilemap.SetTile(new Vector3Int(j, middle - i, 0), ground);
                 }
             }
         }
+        Debug.Log("Generated tunnel. Start value: " + start + ", end value: " + end);
     }
 
     void GenerateObstacles()
