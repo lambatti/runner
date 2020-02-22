@@ -8,7 +8,7 @@ using UnityEngine.Tilemaps;
 public class PlayerController : MonoBehaviour
 {
     public static float speed=10f;
-    public static float speedMultiplier = 2f;
+    public static float speedMultiplier = 1.2f;
     public float jumpForce = 1;
     public float rayLength = 1;
 
